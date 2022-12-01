@@ -8,10 +8,16 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "gh-pages": "^4.0.0",
+    "mongoose": "^6.7.4",
+    "save-dev": "^0.0.1-security"
   },
   "engines": {
     "node": ">=14"

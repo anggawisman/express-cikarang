@@ -1,11 +1,25 @@
+const ipModel = require("./ip.model");
 const express = require("express");
+var cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.use(cors());
+app.get("/", (req, res) => res.type("html").send(html));
+app.get("/location", (req, res) => res.json({ location: "cikarang" }));
+app.get("/visitor", async (req, res) => {
+  let ipData = new ipModel({
+    ip_addr: req.ip,
+    date_added: new Date(),
+  });
+  await ipData.save();
+
+  let numVisits = await ipModel.count();
+
+  return res.json({ your_ip: req.ip, visitor_number: numVisits });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
 
 const html = `
 <!DOCTYPE html>
@@ -56,4 +70,4 @@ const html = `
     </section>
   </body>
 </html>
-`
+`;
